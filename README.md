@@ -40,7 +40,7 @@ Write a README.md file with a description of the program. The goal of this file 
 
 The JSON file contains coordinates, indices, and colors for 4 layers (buildings, water, parks, surface). The building layer also contains normals for each vertex. You can download a sample json file [here](https://fmiranda.me/courses/cs425-spring-2021/city.json).
 
-```json
+```javascript
 {
     'buildings': 
     {
