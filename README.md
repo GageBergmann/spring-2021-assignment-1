@@ -30,9 +30,9 @@ You should implement a view transformation matrix inside `updateViewMatrix` in s
 
 #### Task 4
 You should implement two types of projections (orthographic and perspective). This should be handled by function `updateProjectionMatrix`. Notice that even in an orthographic projection you should be able to zoom-in and zoom-out towards the centerpoint of the model (computed inside function `getCentroid`).
-<center>
+<div style="text-align:center;">
 <img src="ortho.png" alt="Orthographic projection" width="350"/> <img src="perspective.png" alt="Perspective projection" width="350"/>
-</center>
+</div>
 
 
 #### Task 5
