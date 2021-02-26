@@ -5,7 +5,7 @@ The goal of this assignment is to get you familiar with transformations, and tri
 
 There are five tasks, and you are free to use the skeleton code provided. The code has some comments regarding what needs to be implemented in each function. In an overview, it contains functions to handle file upload, and user interactions through the control panel; it also contains four main classes:
 - `FlatProgram`: handles shading of flat layers (water, parks, surface). These layers do not contain normals (as you can notice in the file description below), so they have to be shaded by a constant color. The color of each layer is also specified in the JSON file.
-- `BuildingProgram`: handles shading of building layer. This layer contains normals, so use this information to shade the side of the buildings accordingly. You do not have to implement any illumination model, it is enough to simply color the side of the buildings based on the angle between a constant direction and the face of the building.
+- `BuildingProgram`: handles shading of building layer. This layer contains normals and a constant color, so use this information to shade the side of the buildings accordingly. You do not have to implement any illumination model, it is enough to simply color the side of the buildings based on the layer color and the angle between a direction of your choosing and the face of the building.
 - `Layer` and `BuildingLayer`: handles flat layers, and building layer.
 - `Layers`: collection of layers.
 
