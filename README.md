@@ -9,7 +9,9 @@ There are five tasks, and you are free to use the skeleton code provided. The co
 - `Layer` and `BuildingLayer`: handles flat layers, and building layer.
 - `Layers`: collection of layers.
 
-Here is an example of assignment 1
+File `utils.js` contains some useful functions to create [shaders](https://developer.mozilla.org/en-US/docs/Web/API/WebGLShader), [programs](https://developer.mozilla.org/en-US/docs/Web/API/WebGLProgram), [buffers](https://developer.mozilla.org/en-US/docs/Web/API/WebGLBuffer), [VAOs](https://developer.mozilla.org/en-US/docs/Web/API/WebGLVertexArrayObject), as well as [matrix operations](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Matrix_math_for_the_web), [projections](http://www.songho.ca/opengl/gl_projectionmatrix.html), and [lookat](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml).
+
+Here is an example of assignment 1:
 ![Assignment 1 example](assignment-1.gif)
 
 ### Tasks
@@ -29,7 +31,7 @@ You should implement a view transformation matrix inside `updateViewMatrix` in s
 ![Assignment 1 example](initial.png)
 
 #### Task 4
-You should implement two types of projections (orthographic and perspective). This should be handled by function `updateProjectionMatrix`. Notice that even in an orthographic projection you should be able to zoom-in and zoom-out towards the centerpoint of the model (computed inside function `getCentroid`).
+You should implement two types of projections (orthographic and perspective). This should be handled by function `updateProjectionMatrix`. Notice that even in an orthographic projection you should be able to zoom-in and zoom-out towards the centerpoint of the model (computed inside `getCentroid`).
 
 <p align="center">
 <img src="ortho.png" alt="Orthographic projection" width="350"/> <img src="perspective.png" alt="Perspective projection" width="350"/>
