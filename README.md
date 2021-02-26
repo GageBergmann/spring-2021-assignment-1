@@ -41,7 +41,7 @@ Write a README.md file with a description of the program. The goal of this file 
 
 #### JSON format
 
-The JSON file contains coordinates, indices, and colors for 4 layers (buildings, water, parks, surface). The building layer also contains normals for each vertex. You can download a sample json file <a href="https://fmiranda.me/courses/cs425-spring-2021/city.json" download>here</a>.
+The JSON file contains coordinates, indices, and colors for 4 layers (buildings, water, parks, surface). The building layer also contains normals for each vertex. You can download a zip file with a sample json [here](https://fmiranda.me/courses/cs425-spring-2021/city.json.zip).
 
 ```javascript
 {
