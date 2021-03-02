@@ -17,7 +17,7 @@ Here is an example of assignment 1:
 ### Tasks
 
 #### Task 1
-Create a configuration panel with three components: 
+Create a configuration panel with four components: 
 1) One [sliders](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) with values between 0 and 360. This slider should rotate the camera around the centerpoint of the model (see Task 3).
 2) One [slider](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) with value between 1 and 100. This slider should *approximate* the camera towards the centerpoint of the model (see Task 4).
 3) A [dropdown](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option) menu with values *perspective* and *orthographic*. Changing the selected option should change the projection type (see Task 5).
