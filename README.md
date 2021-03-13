@@ -5,7 +5,7 @@ The goal of this assignment is to get you familiar with transformations, and tri
 
 There are five tasks, and you are free to use the skeleton code provided. The code has some comments regarding what needs to be implemented in each function. In an overview, it contains functions to handle file upload, and user interactions through the control panel; it also contains four main classes:
 - `FlatProgram`: handles shading of flat layers (water, parks, surface). These layers do not contain normals (as you can notice in the file description below), so they have to be shaded by a constant color. The color of each layer is also specified in the JSON file.
-- `BuildingProgram`: handles shading of building layer. This layer contains normals, so use this information to shade the side of the buildings accordingly. You do not have to implement any illumination model, it is enough to simply color the side of the buildings based on the angle between a constant direction and the face of the building.
+- `BuildingProgram`: handles shading of building layer. This layer contains normals and a constant color, so use this information to shade the side of the buildings accordingly. You do not have to implement any illumination model, it is enough to simply color the side of the buildings based on the layer color and the angle between a direction of your choosing and the face of the building.
 - `Layer` and `BuildingLayer`: handles flat layers, and building layer.
 - `Layers`: collection of layers.
 
@@ -17,10 +17,11 @@ Here is an example of assignment 1:
 ### Tasks
 
 #### Task 1
-Create a configuration panel with three components: 
+Create a configuration panel with four components: 
 1) One [sliders](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) with values between 0 and 360. This slider should rotate the camera around the centerpoint of the model (see Task 3).
 2) One [slider](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) with value between 1 and 100. This slider should *approximate* the camera towards the centerpoint of the model (see Task 4).
-3) A [dropdown](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option) menu with values *perspective* and *orthographic*. Changing the selected option should change the projection type (see Task 5) A file [input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) element responsible for loading a JSON file (see Task 2).
+3) A [dropdown](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option) menu with values *perspective* and *orthographic*. Changing the selected option should change the projection type (see Task 5).
+4) A file [input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) element responsible for loading a JSON file (see Task 2).
 
 #### Task 2
 Connect the file input element to the `window.handleFile` function so that every time a JSON file is uploaded by the user, `window.handleFile` is called. You should also complete the `window.handleFile` function so that it properly parses the JSON file, and adds the appropriate layer to the layers dictionary. In order to handle layers, you should implement `init` and `draw` functions in `Layer` and `BuildingLayer`.
