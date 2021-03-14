@@ -25,6 +25,10 @@ function createProgram(gl, vertexShader, fragmentShader) {
     return program;
 }
 
+function isAbv(value) {
+    return value && value.buffer instanceof ArrayBuffer && value.byteLength !== undefined;
+}
+
 function createBuffer(gl, type, data) {
 
     if(data.length == 0)
