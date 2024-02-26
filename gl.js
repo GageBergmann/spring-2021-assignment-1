@@ -24,6 +24,14 @@ class BuildingProgram {
         this.program = createProgram(gl, this.vertexShader, this.fragmentShader);
 
         // TODO: set attrib and uniform locations
+        this.positionAttributeLocation = gl.getAttribLocation(this.program, "position");
+        this.colorAttribLoc = gl.getAttribLocation(this.program, "vColor");
+        this.normalAttribLoc = gl.getAttribLocation(this.program, "normal");
+
+        this.modelLoc = gl.getUniformLocation(this.program, "uModel");
+        this.projLoc = gl.getUniformLocation(this.program, 'uProjection');
+        this.viewLoc = gl.getUniformLocation(this.program, 'uView');
+        this.colorUniformLocation = gl.getUniformLocation(this.program, 'uColor');
     }
 
     use() {
@@ -41,6 +49,13 @@ class FlatProgram {
         this.program = createProgram(gl, this.vertexShader, this.fragmentShader);
 
         // TODO: set attrib and uniform locations
+        this.positionAttributeLocation = gl.getAttribLocation(this.program, "position");
+        this.colorAttribLoc = gl.getAttribLocation(this.program, "vColor");
+        
+        this.modelLoc = gl.getUniformLocation(this.program, "uModel");
+        this.projLoc = gl.getUniformLocation(this.program, 'uProjection');
+        this.viewLoc = gl.getUniformLocation(this.program, 'uView');
+        this.colorUniformLocation = gl.getUniformLocation(this.program, 'uColor');
     }
 
     use() {
@@ -113,13 +128,33 @@ class Layer {
     }
 
     init() {
+        this.program = new FlatProgram();
         // TODO: create program, set vertex and index buffers, vao
+        this.positionBuffer = createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(this.vertices));
+        this.indexBuffer = createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices));
+        this.colorb = createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(this.color));
+        // Create VAO
+        console.log(this.program.colorAttribLoc);
+        const colorBuffr = [1.0, 0.0, 0.0, 1.0];
+        this.vao = createVAO(gl, this.program.positionAttributeLocation, this.positionBuffer, null, null, this.program.colorUniformLocation, this.colorb);
     }
 
     draw(centroid) {
-        // TODO: use program, update model matrix, view matrix, projection matrix
+        
+        updateModelMatrix(centroid);
+        updateViewMatrix(centroid);
+        updateProjectionMatrix(centroid);
+        this.program.use();
+        // TODO: use program, update model matrix, view matrix, projection matrix 
         // TODO: set uniforms
+        gl.uniformMatrix4fv(this.program.modelLoc, false, new Float32Array(modelMatrix));
+        gl.uniformMatrix4fv(this.program.viewLoc, false, new Float32Array(viewMatrix));
+        gl.uniformMatrix4fv(this.program.projLoc, false, new Float32Array(projectionMatrix));
+        gl.uniform4fv(this.program.colorUniformLocation, this.color);
         // TODO: bind vao, bind index buffer, draw elements
+        gl.bindVertexArray(this.vao);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+        gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0);
     }
 }
 
@@ -133,13 +168,30 @@ class BuildingLayer extends Layer {
     }
 
     init() {
+        this.program = new BuildingProgram();
+        this.positionBuffer = createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(this.vertices));
+        this.normalBuffer = createBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(this.normals));
+        this.indexBuffer = createBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices));
         // TODO: create program, set vertex, normal and index buffers, vao
+        this.vao = createVAO(gl, this.program.positionAttributeLocation, this.positionBuffer, this.program.normalAttribLoc, this.normalBuffer, this.program.colorAttribLoc, null);
+
     }
 
     draw(centroid) {
+        this.program.use();
         // TODO: use program, update model matrix, view matrix, projection matrix
+        updateModelMatrix(centroid);
+        updateViewMatrix(centroid);
+        updateProjectionMatrix(centroid);
         // TODO: set uniforms
+        gl.uniformMatrix4fv(this.program.modelLoc, false, new Float32Array(modelMatrix));
+        gl.uniformMatrix4fv(this.program.viewLoc, false, new Float32Array(viewMatrix));
+        gl.uniformMatrix4fv(this.program.projLoc, false, new Float32Array(projectionMatrix));
+        gl.uniform4fv(this.program.colorUniformLocation, this.color);
         // TODO: bind vao, bind index buffer, draw elements
+        gl.bindVertexArray(this.vao);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+        gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0);
     }
 }
 
@@ -165,20 +217,24 @@ window.handleFile = function(e) {
     var reader = new FileReader();
     reader.onload = function(evt) {
         // TODO: parse JSON
+        var fileContent = evt.target.result;
+        var parsed = JSON.parse(fileContent);
         for(var layer in parsed){
             switch (layer) {
                 // TODO: add to layers
                 case 'buildings':
                     // TODO
+                    //layers.addBuildingLayer(layer, parsed[layer].coordinates, parsed[layer].indices, parsed[layer].normals, parsed[layer].color);
                     break;
                 case 'water':
                     // TODO
-                    break;
+                    //break;
                 case 'parks':
                     // TODO
-                    break;
+                    //break;
                 case 'surface':
                     // TODO
+                    layers.addLayer(layer, parsed[layer].coordinates, parsed[layer].indices, parsed[layer].color);
                     break;
                 default:
                     break;
@@ -193,15 +249,27 @@ window.handleFile = function(e) {
 */
 function updateModelMatrix(centroid) {
     // TODO: update model matrix
+    var position = translateMatrix(0, 0, -50);
+    modelMatrix = position;
 }
 
 function updateProjectionMatrix() {
+    
+    var aspect = window.innerWidth / window.innerHeight;
+
+    projectionMatrix = perspectiveMatrix(45.0 * Math.PI / 180.0, aspect, 1, 500);
     // TODO: update projection matrix
 }
 
 function updateViewMatrix(centroid){
     // TODO: update view matrix
     // TIP: use lookat function
+    
+    const eye = [0, 0, 10]; // Camera position
+    const target = centroid; // Look-at point
+    const up = [0, 1, 0]; // Up vector
+    //console.log(viewMatrix, eye, target, up);
+    viewMatrix = lookAt(eye[0], eye[1], eye[2], target[0], target[1], target[2], up[0], up[1], up[2]);
 }
 
 /*
